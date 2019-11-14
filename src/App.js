@@ -1,8 +1,11 @@
 import React from 'react'
 import './App.css'
+import Input from '../src/page/input'
 
 export default function App () {
   return (
-    <div>1111</div>
+    <div>
+      <Input></Input>
+    </div>
   )
 }
