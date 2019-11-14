@@ -1,68 +1,23 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#react生命周期函数
+ - 概念：生命周期函数指在某一时刻组件会自动调用执行的函数
+![react生命周期图](http://ask.qcloudimg.com/http-save/developer-news/6zev9uudex.jpeg)
+ ## Mounting（挂载）
+ - 经历三个周期
+ - componentWillMount 在组件即将挂载到页面的时候执行
+ - componentDidMount  组件在被挂载到页面之后执行
+ - 只在挂载的时候执行，组件第一次被放到页面的时候，只会执行一次
+ ## Updation（组件更新的流程）
+ - 分为props发生变化 和state发生变化
+ - 共性的生命周期函数
+  >shouldComponentUpdate 组件被更新之前会被自动执行 （对于返回值为bool值 可以理解成你的组件是要被更新吗？）
+Warning: Life.shouldComponentUpdate(): Returned undefined instead of a boolean value. Make sure to return true or false. 
+要求返回结果布尔值
+ - componentWillUpdate 组件更新之前他会自动执行，但是他在shouldComponentUpdate之后被执行，如果shouldComponentUpdate返回true才执行，如果返回false就不执行了
+ - render
+ - componentDidUpdate 组件更新完之后他会执行
+ - componentWillReceiveProps 当一个组件从父组件接受了参数，只要父组件的render的函数执行了，子组件的这个生命周期函数就会被执行
+ - 如果这个组件第一次存在于父组件中，不会执行
+ - 如果这个组件之前就已经存在于父组件中，才会执行
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+ ## Unmounting ()
+  - componentWillUnmount 当这个组件即将被从页面中一处的时候才会执行

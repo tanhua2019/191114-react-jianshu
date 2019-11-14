@@ -1,8 +1,11 @@
 import React from 'react'
 import './App.css'
+import Life from '../src/page/life'
 
 export default function App () {
   return (
-    <div>1111</div>
+    <div>
+      <Life></Life>
+    </div>
   )
 }
