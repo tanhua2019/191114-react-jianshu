@@ -28,13 +28,6 @@ export default class Life extends Component {
   componentDidUpdate() {
     console.log('组件更新完之后他会执行');
   }
-
-  UNSAFE_componentWillReceiveProps() {
-    console.log('componentWillReceiveProps');
-  }
-  componentWillUnmount() {
-    console.log('componentWillUnmount');
-  }
   render() {
     console.log('render执行了');
     return (
@@ -57,8 +50,15 @@ export default class Life extends Component {
     }))
   }
   update() {
-    return this.state.list.map(item => {
-      return <LiftItem key={item} father={item}></LiftItem>
+    return this.state.list.map((item,index) => {
+      return <LiftItem key={item+index} father={item} index={index} deletes={this.handleDelete.bind(this)}></LiftItem>
+    })
+  }
+  handleDelete(index) {
+    this.setState((prvState) => {
+      const list = [...prvState.list]
+      list.splice(index,1)
+      return {list}
     })
   }
 }

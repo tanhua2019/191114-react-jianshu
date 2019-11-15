@@ -1,17 +1,22 @@
 import React, { Component } from 'react'
 
 export default class LifeItem extends Component {
+
   UNSAFE_componentWillReceiveProps() {
     console.log('child UNSAFE_componentWillReceiveProps');
   }
+  componentWillUnmount() {
+    console.log('组件即将被删除');
+  }
+  
   render() {
     console.log('子组件render');
     return (
-      <div onClick={(index) => this.delete.bind(index,this)}>{this.props.father}</div>
+      <div onClick={this.handleClick.bind(this)}>{this.props.father}</div>
     )
   }
-  delete(index) {
-    console.log('dianji');
-    console.log(index);
+  handleClick() {
+    const { index, deletes } = this.props
+    deletes(index)
   }
 }
