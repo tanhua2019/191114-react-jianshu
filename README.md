@@ -12,6 +12,8 @@
   >shouldComponentUpdate 组件被更新之前会被自动执行 （对于返回值为bool值 可以理解成你的组件是要被更新吗？）
 Warning: Life.shouldComponentUpdate(): Returned undefined instead of a boolean value. Make sure to return true or false. 
 要求返回结果布尔值
+当input框改变发生渲染的时候，子组件也进行了渲染，组件只有在props或者state发生改变的时候才去渲染，因为
+当父组件的render函数执行的时候子组件的render函数也会执行会带来性能上的损耗
  - UNSAFE_componentWillUpdate 组件更新之前他会自动执行，但是他在shouldComponentUpdate之后被执行，如果shouldComponentUpdate返回true才执行，如果返回false就不执行了
  - render
  - componentDidUpdate 组件更新完之后他会执行

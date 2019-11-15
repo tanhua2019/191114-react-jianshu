@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import LiftItem from './lifeItem'
+import axios from 'axios'
 
 export default class Life extends Component {
   constructor(props) {
@@ -11,12 +12,15 @@ export default class Life extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
   }
-
+  
   UNSAFE_componentWillMount() {
     console.log('马上要被挂载到页面');
   }
   componentDidMount() {
     console.log('组件被挂载了');
+    axios.get('http://localhost:3000/list').then(res => {
+      console.log(res);
+    })
   }
   shouldComponentUpdate(nextProps, nextState) {
     console.log('组件更新前自动执行');
