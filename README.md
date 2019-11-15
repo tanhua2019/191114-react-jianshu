@@ -1,4 +1,4 @@
-#react生命周期函数
+# react生命周期函数
  - 概念：生命周期函数指在某一时刻组件会自动调用执行的函数
 ![react生命周期图](http://ask.qcloudimg.com/http-save/developer-news/6zev9uudex.jpeg)
  ## Mounting（挂载）

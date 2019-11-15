@@ -1,15 +1,18 @@
 import React, { Component } from 'react'
+import LiftItem from './lifeItem'
 
 export default class Life extends Component {
   constructor(props) {
     super(props)
     this.state = ({
-      inputValue: ''
+      inputValue: '',
+      list: []
     })
     this.handleChange = this.handleChange.bind(this)
+    this.handleClick = this.handleClick.bind(this)
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     console.log('马上要被挂载到页面');
   }
   componentDidMount() {
@@ -19,14 +22,14 @@ export default class Life extends Component {
     console.log('组件更新前自动执行');
     return true
   }
-  componentWillUpdate () {
+  UNSAFE_componentWillUpdate() {
     console.log('组件更新前执行，但是在shouldComponentUpdate之后执行');
   }
   componentDidUpdate() {
     console.log('组件更新完之后他会执行');
   }
-  
-  componentWillReceiveProps() {
+
+  UNSAFE_componentWillReceiveProps() {
     console.log('componentWillReceiveProps');
   }
   componentWillUnmount() {
@@ -37,12 +40,25 @@ export default class Life extends Component {
     return (
       <div>
         <input ref={(input) => this.input = input} value={this.state.inputValue} onChange={this.handleChange}></input>
+        <button onClick={this.handleClick}>提交</button>
+        <ul>{this.update()}</ul>
       </div>
     )
   }
   handleChange() {
     this.setState({
       inputValue: this.input.value
+    })
+  }
+  handleClick() {
+    this.setState((prvState) => ({
+      list: [...prvState.list, prvState.inputValue],
+      inputValue: ''
+    }))
+  }
+  update() {
+    return this.state.list.map(item => {
+      return <LiftItem key={item} father={item}></LiftItem>
     })
   }
 }
