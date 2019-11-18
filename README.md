@@ -1,68 +1,91 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React中实现CSS过渡动画
+ - return两个div会报错 因为JSX return出去的内容只能是一个元素
+ - 可以借助react16.x 之后的Fragment占位符, Fragment不会被渲染成任何标签或者元素
+ - opacity 规定不透明度。从 0.0 （完全透明）到 1.0（完全不透明）
+ - transition: property duration timing-function delay; 
+```
+transition 属性是一个简写属性，用于设置四个过渡属性：
+transition-property     规定设置过渡效果的 CSS 属性的名称。
+transition-duration     规定完成过渡效果需要多少秒或毫秒。
+transition-timing-function     规定速度效果的速度曲线。
+transition-delay           定义过渡效果何时开始。
+注释：请始终设置 transition-duration属性，否则时长为 0，就不会产生过渡效果。
+linear：匀速（等于 cubic-bezier(0,0,1,1)）。
+ease：开始和结束慢，中间快（等于cubic-bezier(0.25,0.1,0.25,1)）。
+ease-in：加速（等于 cubic-bezier(0.42,0,1,1)）
+ease-out：减速（等于 cubic-bezier(0,0,0.58,1)）。
+ease-in-out：和ease类似，但比ease幅度大（等于 cubic-bezier(0.42,0,0.58,1)）。
+cubic-bezier函数：自定义速度模式。可能的值是 0 至 1 之间的数值。
+```
+## css的动画效果
+- @keyframes 来定义一些css动画
+```CSS
+.show {
+  opacity: 1;
+  transition: all 1s ease-out;
+}
+.hide {
+  animation: hide-item 2s ease-in forwards;
+}
 
-## Available Scripts
+@keyframes hide-item {
+  0% {
+    opacity: 1;
+    color: red;
+  }
+  50% {
+    opacity: 0.5;
+    color: green;
+  }
+  100% {
+    opacity: 0;
+    color: blue
+  }
+}
+```
+- animation 使用hide-item动画效果 2s完成 动画曲线ease-in  当动画执行完又显示出来的bug
+- 动画运行结束，最后的css效果不会被保存，需要被保存，添加forwards属性保存属性
+ >animation: name duration timing-function delay iteration-count direction fill-mode play-state ; 
+ ```
+animation 属性是一个简写属性，用于设置六个动画属性：
+animation-name       规定需要绑定到选择器的 keyframe 名称。
+animation-duration   规定完成动画所花费的时间，以秒或毫秒计。
+animation-timing-function   规定动画的速度曲线。
+animation-delay       规定在动画开始之前的延迟。
+animation-iteration-count   规定动画应该播放的次数。
+animation-direction  规定是否应该轮流反向播放动画。
+animation-fill-mode   规定当动画不播放时（当动画完成时，或当动画有一个延迟未开始播放时），要应用到元素的样式。
+animation-play-state  指定动画是否正在运或已暂停。
+ ```
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+ ## 使用react-transition-group 实现动画
+ - 打开github搜索react-transition-group 点击Main documentation进入主文档
+ - CSSTransition 
+ - in传入一个变量感知什么时候进行切换
+ - timeout = {300} 动画要执行多久
+ - classNames = "my-node" 随意起名，对应css
+ - unmountOnExit 对应dom的创建与移除
+ - onEnter onEntered={(el) => {el.style.color= 'blue'}}
+ - appear = {true} 的时候，第一次加载页面的时候也会有动画
+ ```
+.my-node-enter {
+  opacity: 0;
+}
+.my-node-enter-active {
+  opacity: 1;
+  transition: opacity 1s ease-in;
+}
+.my-node {
+  opacity: 1;
+}
+.my-node-exit {
+  opacity: 1;
+}
+.my-node-exit-active {
+  opacity: 0;
+  transition: opacity 1s ease-in;
+}
+.my-node-exit-done {
+  opacity: 0;
+}
+ ```
