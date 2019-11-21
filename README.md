@@ -1,10 +1,24 @@
-# Redux设计和使用的三项原则
-- store必须是唯一的 整个项目中只有一个store
-- 只有store能改变自己的内容 store拿到reducer里面的数据，自己更新自己
-- Reducer必须是纯函数 指的是给定固定的输入，就一定会有固定的输出而且不会有任何副作用
+# UI组件与容器组件
+- UI组件也叫傻瓜组件，容器组件也叫聪明组件
+# 使用Redux-thunk中间件进行ajax请求发送
+- 把异步请求复杂的逻辑放在action中
+- 打开github redux-thunk
+- 打开github edux-devtools-extension
+# 让redux既支持redux-thunk又支持redux-devtools
+```JavaScript
+import { createStore, applyMiddleware,compose } from 'redux'
+import render from './reducer'
+import thunk from 'redux-thunk'
 
-# redux核心api
-- createStore 创建一个store
-- store.dispatch 派发action
-- store.getState 会获取到store里面所有的内容
-- store.subscribe 订阅store的改变，只要store发生改变，subscribe接收的回调函数就会执行
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;
+const enhancer = composeEnhancers(
+  applyMiddleware(thunk),
+);
+const store = createStore(
+  render,
+  enhancer,
+);
+
+export default store;
+```
+

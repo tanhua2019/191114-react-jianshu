@@ -1,8 +1,9 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import 'antd/dist/antd.css'
-import { Input, Button, List } from 'antd'
 import store from './store'
-import { changeInput,addInput,deleteInput } from './store/actionCreator'
+import { changeInput, addInput, deleteInput, initData, getTodoList } from './store/actionCreator'
+import TodoLisUi from './TodoLisUi'
+import axios from 'axios'
 
 
 export default class TodoList extends Component {
@@ -12,21 +13,29 @@ export default class TodoList extends Component {
     this.state = store.getState();
     this.storeChange = this.storeChange.bind(this)
     this.addInput = this.addInput.bind(this)
+    this.deleteItem = this.deleteItem.bind(this)
     store.subscribe(this.storeChange)
   }
+  // componentDidMount() {
+  //   axios.get('http://localhost:3000/list').then(res => {
+  //     const action = initData(res.data)
+  //     store.dispatch(action)
+  //   })
+  // }
+  componentDidMount() {
+    const action = getTodoList();
+    store.dispatch(action)
+  }
+  
+
   render() {
     return (
-      <Fragment>
-        <Input placeholder="请输入" style={{ width: '300px', margin: '20px' }} onChange={this.inputChange} value={this.state.inputValue}></Input>
-        <Button type="primary" onClick={this.addInput}>添加</Button>
-        <List
-          style={{width: '300px', marginLeft: 20}}
-          size="small"
-          bordered
-          dataSource={this.state.list}
-          renderItem={(item,index) => <List.Item onClick={this.deleteItem.bind(this,index)}>{item}</List.Item>}
-        />
-      </Fragment>
+      <TodoLisUi
+        inputValue={this.state.inputValue}
+        inputChange={this.inputChange}
+        addInput={this.addInput}
+        list={this.state.list}
+        deleteItem={this.deleteItem} />
     )
   }
   inputChange(e) {
@@ -41,6 +50,7 @@ export default class TodoList extends Component {
     store.dispatch(action)
   }
   deleteItem(index) {
+    console.log(index, '99');
     const action = deleteInput(index)
     store.dispatch(action)
   }
