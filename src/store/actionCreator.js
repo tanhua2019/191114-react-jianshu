@@ -1,5 +1,4 @@
-import { CHANGE_INPUT_VALUE, ADD_INPUT_VALUE, DELETE_INPUT_VALUE, INIT_DATA } from './actionTypes'
-import axios from 'axios'
+import { CHANGE_INPUT_VALUE, ADD_INPUT_VALUE, DELETE_INPUT_VALUE, INIT_DATA,GET_INIT_LIST } from './actionTypes'
 
 export const changeInput = (e) => ({
   type: CHANGE_INPUT_VALUE,
@@ -20,11 +19,6 @@ export const initData = (data) => ({
   data
 })
 
-export const getTodoList = () => {
-  return (dispatch) => {
-    axios.get('http://localhost:3000/list').then(res => {
-      const action = initData(res.data)
-      dispatch(action)
-    })
-  }
-}
+export const getInitAction = () => ({
+  type: GET_INIT_LIST
+})

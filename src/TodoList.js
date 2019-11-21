@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import 'antd/dist/antd.css'
 import store from './store'
-import { changeInput, addInput, deleteInput, initData, getTodoList } from './store/actionCreator'
+import { changeInput, addInput, deleteInput, getInitAction } from './store/actionCreator'
 import TodoLisUi from './TodoLisUi'
-import axios from 'axios'
+
 
 
 export default class TodoList extends Component {
@@ -16,18 +16,10 @@ export default class TodoList extends Component {
     this.deleteItem = this.deleteItem.bind(this)
     store.subscribe(this.storeChange)
   }
-  // componentDidMount() {
-  //   axios.get('http://localhost:3000/list').then(res => {
-  //     const action = initData(res.data)
-  //     store.dispatch(action)
-  //   })
-  // }
   componentDidMount() {
-    const action = getTodoList();
-    store.dispatch(action)
+    const action = getInitAction()
+    store.dispatch(action);
   }
-  
-
   render() {
     return (
       <TodoLisUi
