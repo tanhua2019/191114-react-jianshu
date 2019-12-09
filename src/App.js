@@ -1,8 +1,17 @@
-import React from 'react'
-import './App.css'
 
-export default function App () {
-  return (
-    <div>1111</div>
-  )
+
+
+import React, { Component, Fragment } from 'react'
+import { GlobalStyle } from './style' 
+import Header from './common/header'
+
+export default class App extends Component {
+  render() {
+    return (
+      <Fragment>
+        <GlobalStyle />
+        <Header></Header>
+      </Fragment>
+    )
+  }
 }
